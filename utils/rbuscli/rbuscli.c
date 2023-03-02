@@ -2204,7 +2204,7 @@ void validate_and_execute_listen_command(int argc, char *argv[], bool add)
        rtList_Create(&g_messageUserData);
 
     userData = rt_calloc(1, 256);
-    sprintf(userData, "listen %s", argv[2]);
+    snprintf(userData, 256, "listen %s", argv[2]);
 
     printf("value of argv[2] = %s\n", argv[2]);
     printf("value of userData = %s\n", userData);
