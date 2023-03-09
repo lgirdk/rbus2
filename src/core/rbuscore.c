@@ -39,7 +39,7 @@ void rbusMessage_BeginMetaSectionRead(rbusMessage message);
 void rbusMessage_EndMetaSectionRead(rbusMessage message);
 
 /* Begin constant definitions.*/
-static const unsigned int TIMEOUT_VALUE_FIRE_AND_FORGET = 1000;
+static const unsigned int TIMEOUT_VALUE_FIRE_AND_FORGET = 20000;
 static const unsigned int MAX_SUBSCRIBER_NAME_LENGTH = MAX_OBJECT_NAME_LENGTH;
 static const char * DEFAULT_EVENT = "";
 /* End constant definitions.*/
