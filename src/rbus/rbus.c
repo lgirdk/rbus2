@@ -92,7 +92,8 @@ typedef enum _rbus_legacy_support
     RBUS_LEGACY_FLOAT,         /**< Float (ex: 1.2E-38 or 3.4E+38) as String                         */
     RBUS_LEGACY_DOUBLE,        /**< Double (ex: 2.3E-308 or 1.7E+308) as String                      */
     RBUS_LEGACY_BYTE,
-    RBUS_LEGACY_NONE
+    RBUS_LEGACY_NONE,
+    RBUS_LEGACY_HEXBINARY
 } rbusLegacyDataType_t;
 
 typedef enum _rbus_legacy_returns {
@@ -414,6 +415,11 @@ static bool _parse_rbusData_to_value (char const* pBuff, rbusLegacyDataType_t le
 	        rc = true;
                 break;
             }
+            case RBUS_LEGACY_HEXBINARY:
+            {
+                rc = rbusValue_SetFromString(value, RBUS_HEXBINARY, pBuff);
+                break;
+            }
             default:
                 break;
         }
@@ -452,7 +458,7 @@ rbusError_t rbusValue_initFromMessage(rbusValue_t* value, rbusMessage msg)
 #if DEBUG_SERIALIZER
     RBUSLOG_INFO("> value pop type=%d", type);
 #endif
-    if(type>=RBUS_LEGACY_STRING && type<=RBUS_LEGACY_NONE)
+    if(type>=RBUS_LEGACY_STRING && type<=RBUS_LEGACY_HEXBINARY)
     {
         rbusMessage_GetString(msg, &pBuffer);
         RBUSLOG_DEBUG("Received Param Value in string : [%s]", pBuffer);
