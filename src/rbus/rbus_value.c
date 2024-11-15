@@ -254,6 +254,7 @@ char* rbusValue_ToString(rbusValue_t v, char* buf, size_t buflen)
         switch(v->type)
         {
         case RBUS_STRING:
+        case RBUS_HEXBINARY:
             n = v->d.bytes->posWrite;
             break;
         case RBUS_BYTES:
@@ -311,6 +312,7 @@ char* rbusValue_ToString(rbusValue_t v, char* buf, size_t buflen)
     switch(v->type)
     {
     case RBUS_STRING:
+    case RBUS_HEXBINARY:
         strncpy(p, (char const* ) v->d.bytes->data, n);
         break;
     case RBUS_BYTES:
@@ -588,6 +590,25 @@ void rbusValue_SetString(rbusValue_t v, char const* s)
         return;
     }
     rbusValue_SetBufferData(v, s, strlen(s)+1, RBUS_STRING);/* +1 to write null terminator */
+    assert(strlen((char const*)v->d.bytes->data)+1==(size_t)v->d.bytes->posWrite);
+    assert(strlen(s)+1==(size_t)v->d.bytes->posWrite);
+}
+
+void rbusValue_SetHexBinary(rbusValue_t v, char const* s)
+{
+    /*if NULL is passed, we need to set ourselves to be a NULL RBUS_HEXBINARY
+      We free the buffer (which sets it NULL) and set our type to RBUS_HEXBINARY
+      Functions rbusValue_GetString & rbusValue_GetBytes can determine if
+      they need to return NULL or not by checking if the buffer is NULL or not.
+    */
+    VERIFY_NULL(v);
+    if(s == NULL)
+    {
+        rbusValue_FreeInternal(v);
+        v->type = RBUS_HEXBINARY;
+        return;
+    }
+    rbusValue_SetBufferData(v, s, strlen(s)+1, RBUS_HEXBINARY);/* +1 to write null terminator */
     assert(strlen((char const*)v->d.bytes->data)+1==(size_t)v->d.bytes->posWrite);
     assert(strlen(s)+1==(size_t)v->d.bytes->posWrite);
 }
@@ -1048,6 +1069,9 @@ bool rbusValue_SetFromString(rbusValue_t value, rbusValueType_t type, const char
     {
     case RBUS_STRING:
         rbusValue_SetString(value, pStringInput);
+        break;
+    case RBUS_HEXBINARY:
+        rbusValue_SetHexBinary(value, pStringInput);
         break;
     case RBUS_BYTES:
         tmp_strlen= strlen(pStringInput);
