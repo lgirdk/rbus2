@@ -71,6 +71,7 @@ typedef enum
     RBUS_BYTES,             /**< byte array */
     RBUS_PROPERTY,          /**< property instance */
     RBUS_OBJECT,            /**< object instance */
+    RBUS_HEXBINARY,
     RBUS_NONE
 } rbusValueType_t;
 
@@ -323,6 +324,7 @@ void rbusValue_SetSingle(rbusValue_t value, float f32);
 void rbusValue_SetDouble(rbusValue_t value, double f64);
 void rbusValue_SetTime(rbusValue_t value, rbusDateTime_t const* tv);
 void rbusValue_SetString(rbusValue_t value, char const* s);
+void rbusValue_SetHexBinary(rbusValue_t value, char const* s);
 void rbusValue_SetBytes(rbusValue_t value, uint8_t const* bytes, int len);
 void rbusValue_SetProperty(rbusValue_t value, struct _rbusProperty* property);
 void rbusValue_SetObject(rbusValue_t value, struct _rbusObject* object);
