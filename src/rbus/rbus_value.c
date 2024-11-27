@@ -1233,6 +1233,7 @@ bool rbusValue_SetFromString(rbusValue_t value, rbusValueType_t type, const char
                     pRet=(char *)strptime(pStringInput, "%Y-%m-%d %H:%M:%S", &(tv));
                 if(!pRet) {
                     RBUSLOG_INFO ("Invalid input string ");
+                    value->type = RBUS_DATETIME;
                     return false;
                 }
                 rbusValue_MarshallTMtoRBUS(&tvm, &tv);
