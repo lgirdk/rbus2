@@ -224,10 +224,10 @@ static rbusError_t CCSPError_to_rbusError(rtError e)
       err = RBUS_ERROR_OUT_OF_RESOURCES;
       break;
     case RBUS_LEGACY_ERR_INVALID_PARAMETER_NAME:
-      err = RBUS_ERROR_INVALID_INPUT;
+      err = RBUS_ERROR_INVALID_NAME;
       break;
     case RBUS_LEGACY_ERR_INVALID_PARAMETER_TYPE:
-      err = RBUS_ERROR_INVALID_INPUT;
+      err = RBUS_ERROR_INVALID_TYPE;
       break;
     case RBUS_LEGACY_ERR_INVALID_PARAMETER_VALUE:
      err = RBUS_ERROR_INVALID_INPUT;
