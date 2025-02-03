@@ -1073,7 +1073,8 @@ rbusError_t rbus_setMulti(
     rbusHandle_t handle,
     int numProps,
     rbusProperty_t properties,
-    rbusSetOptions_t* opts);
+    rbusSetOptions_t* opts,
+    char  *paramName);
 
 
 /** @fn rbusError_t rbus_setBoolean(

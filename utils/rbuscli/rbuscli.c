@@ -1412,7 +1412,7 @@ void validate_and_execute_set_cmd (int argc, char *argv[])
             }
 
             rbusSetOptions_t opts = {isCommit,sessionId};
-            rc = rbus_setMulti(g_busHandle, paramCnt, properties/*setNames, setVal*/, &opts);
+            rc = rbus_setMulti(g_busHandle, paramCnt, properties/*setNames, setVal*/, &opts, NULL);
         }
         else
         {

@@ -3838,7 +3838,7 @@ rbusError_t rbus_set(rbusHandle_t handle, char const* name,rbusValue_t value, rb
     return errorcode;
 }
 
-rbusError_t rbus_setMulti(rbusHandle_t handle, int numProps, rbusProperty_t properties, rbusSetOptions_t* opts)
+rbusError_t rbus_setMulti(rbusHandle_t handle, int numProps, rbusProperty_t properties, rbusSetOptions_t* opts,char *paramName)
 {
     rbusError_t errorcode = RBUS_ERROR_INVALID_INPUT;
     rbusCoreError_t err = RBUSCORE_SUCCESS;
@@ -4000,6 +4000,12 @@ rbusError_t rbus_setMulti(rbusHandle_t handle, int numProps, rbusProperty_t prop
                         {
                             rbusMessage_GetString(setResponse, &pErrorReason);
                             RBUSLOG_WARN("Failed to Set the Value for %s", pErrorReason);
+                            if(pErrorReason && paramName)
+                            {
+                                strncpy(paramName,pErrorReason, (RBUS_MAX_NAME_LENGTH - 1) );
+                                paramName[RBUS_MAX_NAME_LENGTH - 1] = '\0';
+                                RBUSLOG_WARN("%s %d paramName:%s",__FUNCTION__,__LINE__,paramName);
+                            }
                             if(legacyRetCode > RBUS_LEGACY_ERR_SUCCESS)
                             {
                                 errorcode = CCSPError_to_rbusError(legacyRetCode);
